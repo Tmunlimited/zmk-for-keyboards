@@ -194,11 +194,7 @@
     #define MOUSE_SCROLL_UP    SCRL_UP
     #define MOUSE_SCROLL_DOWN  SCRL_DOWN
     #define MOUSE_SCROLL_LEFT  SCRL_LEFT
-    #define
-
-    MOUSE_SCROLL_RIGHT
-
-    SCRL_RIGHT
+    #define MOUSE_SCROLL_RIGHT SCRL_RIGHT
 
     // MOUSE_MOTION_DELAY defines how long to wait (milliseconds) before starting
     // to move the mouse pointer.
@@ -308,11 +304,12 @@
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 &input_processors {
     zip_scroll_scaler: zip_scroll_scaler {
-    compatible = "zmk,input-processor-scaler";
-    #input-processor-cells = <2>;
-    type = <INPUT_EV_REL>;
-    codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
-    track-remainders;
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+        track-remainders;
+    };
 };
 
 &msc_input_listener {
