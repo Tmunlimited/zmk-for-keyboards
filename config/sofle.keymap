@@ -3,18 +3,17 @@
  *
  * SPDX-License-Identifier: MIT
  */
+// needed for mouse
+// needed for zip-scroll-scaler change 
 
+#include <input/processors.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
-// needed for mouse
-#include <dt-bindings/zmk/pointing.h>
-// needed for zip-scroll-scaler change 
-#include <input/processors.dtsi>
-#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 #define LAYER_Base 0
 #define LAYER_System 1
@@ -58,9 +57,11 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
+
             hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;
             hold-trigger-on-release;
         };
+
         hmr: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -69,6 +70,7 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
+
             hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 44 45 46 47 48 49>;
             hold-trigger-on-release;
         };
@@ -79,11 +81,11 @@
 
         LAYER_Base {
             bindings = <
-&kp GRAVE  &kp N1          &kp N2          &kp N3       &kp N4            &kp N5                                       &kp N6           &kp N7             &kp N8       &kp N9          &kp N0         &kp MINUS
-&kp TAB    &kp Q           &mt RALT W      &kp E        &kp R             &kp T                                        &kp Y            &kp U              &kp I        &mt RALT O      &kp P          &kp BSPC
-&kp ESC    &mt LEFT_WIN A  &mt LEFT_ALT S  &mt LCTRL D  &mt LEFT_SHIFT F  &kp G                                        &kp H            &mt RIGHT_SHIFT J  &mt RCTRL K  &mt LEFT_ALT L  &mt RGUI SEMI  &kp SQT
-&kp LSHFT  &kp Z           &kp X           &kp C        &kp V             &kp B        &kp C_MUTE     &rgb_ug RGB_TOG  &kp N            &kp M              &kp COMMA    &kp DOT         &kp FSLH       &kp RSHFT
-                           &kp LGUI        &kp LALT     &lt 5 LALT        &lt 3 LCTRL  &lt 4 SPACE    &lt 8 ENTER      &lt 2 BACKSPACE  &lt 1 DELETE       &kp RALT     &kp RGUI
+&kp GRAVE  &kp N1           &kp N2           &kp N3        &kp N4             &kp N5                                       &kp N6           &kp N7              &kp N8        &kp N9           &kp N0          &kp MINUS
+&kp TAB    &kp Q            &hml RALT W      &kp E         &kp R              &kp T                                        &kp Y            &kp U               &kp I         &hmr RALT O      &kp P           &kp BSPC
+&kp ESC    &hml LEFT_WIN A  &hml LEFT_ALT S  &hml LCTRL D  &hml LEFT_SHIFT F  &kp G                                        &kp H            &hmr RIGHT_SHIFT J  &hmr RCTRL K  &hmr LEFT_ALT L  &hmr RGUI SEMI  &kp SQT
+&kp LSHFT  &kp Z            &kp X            &kp C         &kp V              &kp B        &kp C_MUTE     &rgb_ug RGB_TOG  &kp N            &kp M               &kp COMMA     &kp DOT          &kp FSLH        &kp RSHFT
+                            &kp LGUI         &kp LALT      &lt 5 LALT         &lt 3 LCTRL  &lt 4 SPACE    &lt 8 ENTER      &lt 2 BACKSPACE  &lt 1 DELETE        &kp RALT      &kp RGUI
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -111,11 +113,11 @@
 
         LAYER_Navigation {
             bindings = <
-&none  &kp ESCAPE    &kp INSERT    &kp LS(TAB)  &kp DELETE      &none                        &none        &none     &none     &none      &none      &none
-&none  &kp ENTER     &kp SPACE     &kp TAB      &kp BACKSPACE   &kp K_CUT                    &kp K_CUT    &kp HOME  &kp UP    &kp END    &kp PG_UP  &none
-&none  &kp LEFT_WIN  &kp LEFT_ALT  &kp LCTRL    &kp LEFT_SHIFT  &kp K_COPY                   &kp K_COPY   &kp LEFT  &kp DOWN  &kp RIGHT  &kp PG_DN  &none
-&none  &none         &none         &none        &none           &kp K_PASTE  &none    &none  &kp K_PASTE  &none     &none     &none      &none      &none
-                     &none         &none        &none           &none        &none    &none  &none        &none     &none     &none
+&none  &kp ESCAPE    &kp INSERT    &kp LS(TAB)  &kp DELETE      &none                      &none      &none     &none     &none      &none      &none
+&none  &kp ENTER     &kp SPACE     &kp TAB      &kp BACKSPACE   &kp LC(X)                  &kp LC(X)  &kp HOME  &kp UP    &kp END    &kp PG_UP  &none
+&none  &kp LEFT_WIN  &kp LEFT_ALT  &kp LCTRL    &kp LEFT_SHIFT  &kp LC(C)                  &kp LC(C)  &kp LEFT  &kp DOWN  &kp RIGHT  &kp PG_DN  &none
+&none  &none         &none         &none        &none           &kp LC(V)  &none    &none  &kp LC(V)  &none     &none     &none      &none      &none
+                     &none         &none        &none           &none      &none    &none  &none      &none     &none     &none
             >;
         };
 
@@ -169,11 +171,11 @@
 
         LAYER_Mouse {
             bindings = <
-&none  &none           &none           &none           &none            &none                            &none        &none       &none      &none      &none     &none
-&none  &msc SCRL_UP    &msc SCRL_LEFT  &mmv MOVE_UP    &msc SCRL_RIGHT  &kp K_CUT                        &kp K_CUT    &mkp LCLK   &mkp MCLK  &mkp RCLK  &mkp MB4  &none
-&none  &msc SCRL_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp K_COPY                       &kp K_COPY   &mo 10      &mo 11     &mo 9      &mkp MB5  &none
-&none  &none           &none           &mkp MB4        &mkp MB5         &kp K_PASTE  &none        &none  &kp K_PASTE  &kp LSHIFT  &kp LCTRL  &kp LALT   &kp LGUI  &none
-                       &none           &none           &mkp MCLK        &mkp LCLK    &mkp RCLK    &none  &none        &none       &none      &none
+&none  &none           &none           &none           &none            &none                          &none      &none       &none      &none      &none     &none
+&none  &msc SCRL_UP    &msc SCRL_LEFT  &mmv MOVE_UP    &msc SCRL_RIGHT  &kp LC(X)                      &kp LC(X)  &mkp LCLK   &mkp MCLK  &mkp RCLK  &mkp MB4  &none
+&none  &msc SCRL_DOWN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &kp LC(C)                      &kp LC(C)  &mo 10      &mo 11     &mo 9      &mkp MB5  &none
+&none  &none           &none           &mkp MB4        &mkp MB5         &kp LC(V)  &none        &none  &kp LC(V)  &kp LSHIFT  &kp LCTRL  &kp LALT   &kp LGUI  &none
+                       &none           &none           &mkp MCLK        &mkp LCLK  &mkp RCLK    &none  &none      &none       &none      &none
             >;
         };
 
@@ -213,7 +215,11 @@
     #define MOUSE_SCROLL_UP    SCRL_UP
     #define MOUSE_SCROLL_DOWN  SCRL_DOWN
     #define MOUSE_SCROLL_LEFT  SCRL_LEFT
-    #define MOUSE_SCROLL_RIGHT SCRL_RIGHT
+    #define
+
+    MOUSE_SCROLL_RIGHT
+
+    SCRL_RIGHT
 
     // MOUSE_MOTION_DELAY defines how long to wait (milliseconds) before starting
     // to move the mouse pointer.
@@ -265,6 +271,7 @@
 };
 
 // ==== MOUSE-KEY <section begins> ====
+
 #define ZMK_POINTING_DEFAULT_MOVE_VAL MOUSE_MOTION_MAXIMUM_SPEED
 #define ZMK_POINTING_DEFAULT_SCRL_VAL MOUSE_SCROLL_MAXIMUM_SPEED
 
