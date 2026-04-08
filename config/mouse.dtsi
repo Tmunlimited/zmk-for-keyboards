@@ -1,0 +1,138 @@
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 600
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 10
+
+#include <input/processors.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <dt-bindings/zmk/pointing.h>
+
+
+#define MOUSE_SCROLL_UP SCRL_UP
+#define MOUSE_SCROLL_DOWN SCRL_DOWN
+#define MOUSE_SCROLL_LEFT SCRL_LEFT
+#define MOUSE_SCROLL_RIGHT SCRL_RIGHT
+
+// MOUSE_MOTION_DELAY defines how long to wait (milliseconds) before starting
+// to move the mouse pointer.
+#define MOUSE_MOTION_DELAY 0
+
+// MOUSE_MOTION_ACCELERATION_EXPONENT sets how the mouse pointer accelerates:
+//
+// acceleration exponent 0: uniform speed
+// acceleration exponent 1: uniform acceleration
+// acceleration exponent 2: uniform jerk
+//
+#define MOUSE_MOTION_ACCELERATION_EXPONENT 1
+
+// MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED defines how long to wait (milliseconds)
+// before the mouse pointer speed is suddenly boosted to the maximum value.
+#define MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED 300
+
+// MOUSE_SCROLL_DELAY defines how long to wait (milliseconds) before starting
+// to move the mouse pointer.
+#define MOUSE_SCROLL_DELAY 0
+
+// MOUSE_SCROLL_ACCELERATION_EXPONENT sets how the mouse pointer accelerates:
+//
+// acceleration exponent 0: uniform speed
+// acceleration exponent 1: uniform acceleration
+// acceleration exponent 2: uniform jerk
+//
+#define MOUSE_SCROLL_ACCELERATION_EXPONENT 0
+
+// MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED defines how long to wait (milliseconds)
+// before the mouse pointer speed is suddenly boosted to the maximum value.
+#define MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED 300
+
+// MOUSE_SCALER_SLOW sets parameters for the &zip_xy_scaler input processor:
+// https://zmk.dev/docs/keymaps/input-processors/scaler
+#define MOUSE_SCALER_SLOW 1 4
+
+// MOUSE_SCALER_FAST sets parameters for the &zip_xy_scaler input processor:
+#define MOUSE_SCALER_FAST 4 1
+
+// MOUSE_SCALER_WARP sets parameters for the &zip_xy_scaler input processor:
+#define MOUSE_SCALER_WARP 12 1
+
+&mmv {
+    delay-ms = <MOUSE_MOTION_DELAY>;
+    acceleration-exponent = <MOUSE_MOTION_ACCELERATION_EXPONENT>;
+    time-to-max-speed-ms = <MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED>;
+};
+
+&msc {
+    delay-ms = <MOUSE_SCROLL_DELAY>;
+    acceleration-exponent = <MOUSE_SCROLL_ACCELERATION_EXPONENT>;
+    time-to-max-speed-ms = <MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED>;
+};
+
+//
+// Scaling for mouse movement, based on @caksoylar's example:
+// https://github.com/caksoylar/zmk-config/commit/0020c23c544cd7111013f0114609d1fb90e0e475
+//
+
+&mmv_input_listener {
+    #ifdef LAYER_MouseSlow
+
+    slow {
+        layers = <LAYER_MouseSlow>;
+        input-processors = <&zip_xy_scaler MOUSE_SCALER_SLOW>;
+    };
+
+    #endif
+    #ifdef LAYER_MouseFast
+
+    fast {
+        layers = <LAYER_MouseFast>;
+        input-processors = <&zip_xy_scaler MOUSE_SCALER_FAST>;
+    };
+
+    #endif
+    #ifdef LAYER_MouseWarp
+
+    warp {
+        layers = <LAYER_MouseWarp>;
+        input-processors = <&zip_xy_scaler MOUSE_SCALER_WARP>;
+    };
+
+    #endif
+};
+
+//
+// Scaling for mouse scrolling, based on @caksoylar's example:
+// https://github.com/caksoylar/zmk-config/commit/e35ee2f08788927683df7bbdd7fc73434473886e
+//
+
+&zip_scroll_scaler {
+    compatible = "zmk,input-processor-scaler";
+    #input-processor-cells = <2>;
+    type = <INPUT_EV_REL>;
+    codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+    track-remainders;
+};
+
+&msc_input_listener {
+    #ifdef LAYER_MouseSlow
+
+    slow {
+        layers = <LAYER_MouseSlow>;
+        input-processors = <&zip_scroll_scaler MOUSE_SCALER_SLOW>;
+    };
+
+    #endif
+    #ifdef LAYER_MouseFast
+
+    fast {
+        layers = <LAYER_MouseFast>;
+        input-processors = <&zip_scroll_scaler MOUSE_SCALER_FAST>;
+    };
+
+    #endif
+    #ifdef LAYER_MouseWarp
+
+    warp {
+        layers = <LAYER_MouseWarp>;
+        input-processors = <&zip_scroll_scaler MOUSE_SCALER_WARP>;
+    };
+
+    #endif
+};
