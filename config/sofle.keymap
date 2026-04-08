@@ -15,8 +15,6 @@
 // needed for zip-scroll-scaler change 
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-#include <zmk-helpers/key-labels/sofle.h>   
-
 
 #define LAYER_Base 0
 #define LAYER_System 1
