@@ -15,6 +15,7 @@
 // needed for zip-scroll-scaler change 
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
+#include "zmk-helpers/key-labels/sofle.h"   
 
 
 #define LAYER_Base 0
@@ -59,7 +60,7 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = < ... >; // List of keys on the right side of the keyboard
+            hold-trigger-key-positions = < KEYS_R >;
             hold-trigger-on-release;
         };
         hmr: home_row_mod_right {
@@ -70,7 +71,7 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = < ... >; // List of keys on the left side of the keyboard
+            hold-trigger-key-positions = < KEYS_L >;
             hold-trigger-on-release;
         };
     };
